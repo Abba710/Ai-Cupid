@@ -1,3 +1,5 @@
+const { sortAndDeduplicateDiagnostics } = require('typescript')
+
 require('@rushstack/eslint-patch/modern-module-resolution')
 
 module.exports = {

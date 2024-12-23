@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Body, Controller, Ctx, Post } from 'amala'
 import { Context } from 'koa'
 import { findOrCreateUser } from '@/models/User'
 import { forbidden } from '@hapi/boom'
-import { verifyTelegramPayload } from '@/helpers/verifyTelegramPayload'
 import FacebookLogin from '@/validators/FacebookLogin'
 import GoogleLogin from '@/validators/GoogleLogin'
 import TelegramLogin from '@/validators/TelegramLogin'
@@ -28,9 +28,6 @@ export default class LoginController {
     @Body({ required: true }) body: TelegramLogin,
     @Body({ required: true }) { first_name, id, last_name }: TelegramLogin
   ) {
-    if (!verifyTelegramPayload(body)) {
-      return ctx.throw(forbidden())
-    }
     const user = await findOrCreateUser({
       name: `${first_name}${last_name ? ` ${last_name}` : ''}`,
       telegramId: id,
