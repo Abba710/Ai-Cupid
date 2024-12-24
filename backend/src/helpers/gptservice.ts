@@ -1,11 +1,18 @@
-import axios from 'axios'
 import env from '@/helpers/env'
+import OpenAI from 'openai'
 
-const baseURL = 'https://api.zukijourney.com/v1'
-const apiKey = env.OPENAI
+const client = new OpenAI({
+  baseURL: 'https://api.zukijourney.com/v1',
+  apiKey: env.OPENAI,
+})
+
+interface ChatMessage {
+  role: 'system' | 'user' | 'assistant' // перечисление возможных значений для роли
+  content: string // содержание сообщения
+}
 
 export async function sendMessage(message: string) {
-  const settings = [
+  const msg: ChatMessage[] = [
     {
       role: 'system',
       content: 'Ты Cupid AI и твоя задача помогать в делах любовных',
@@ -16,23 +23,12 @@ export async function sendMessage(message: string) {
     },
   ]
   try {
-    const response = await axios.post(
-      baseURL, // URL for GPT-4 API
-      {
-        model: 'gpt-4o-mini',
-        settings,
-        temperature: 1,
-        max_tokens: 150,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${apiKey}`,
-        },
-      }
-    )
-    console.log('Response:', response.data)
-    return response.data
+    const response = await client.chat.completions.create({
+      model: 'gpt-4o-mini',
+      messages: msg,
+      temperature: 1,
+    })
+    return response.choices[0].message.content
   } catch (error) {
     console.error('Error sending message:', error)
   }

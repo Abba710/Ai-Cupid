@@ -18,6 +18,9 @@ export default async function () {
     disableVersioning: true,
     router,
   })
+  router.get('/', async (ctx) => {
+    ctx.body = 'Сервер работает!' // Ответ при обращении к корню
+  })
   app.use(cors({ origin: '*' }))
   app.use(bodyParser())
   app.use(router.routes())
@@ -26,7 +29,8 @@ export default async function () {
     const connection = app
       .listen(env.PORT)
       .on('listening', () => {
-        console.log(`HTTP is listening on ${env.PORT}`)
+        console.log(`HTTP server is running at http://localhost:${env.PORT}/`)
+
         resolve(connection)
       })
       .on('error', reject)
