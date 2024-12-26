@@ -7,8 +7,8 @@ const client = new OpenAI({
 })
 
 interface ChatMessage {
-  role: 'system' | 'user' | 'assistant' // перечисление возможных значений для роли
-  content: string // содержание сообщения
+  role: 'system' | 'user' | 'assistant'
+  content: string
 }
 
 export async function sendMessage(message: string) {

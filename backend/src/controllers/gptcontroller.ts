@@ -9,9 +9,9 @@ interface RequestBody {
 export default class GetGptController {
   @Post('/')
   async getGptService(@Body() body: RequestBody) {
-    console.log('Received body:', body) // Выводим весь body
-    const message = 'ПРИВТЕТ! как знакомиться с противоположным полом'
-    console.log('Extracted message:', message) // Выводим извлеченное сообщение
+    console.log('Received body:', body)
+    const message = ''
+    console.log('Extracted message:', message)
 
     if (!message) {
       return { error: 'Prompt is required' }

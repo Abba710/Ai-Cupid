@@ -19,7 +19,7 @@ export default async function () {
     router,
   })
   router.get('/', async (ctx) => {
-    ctx.body = 'Сервер работает!' // Ответ при обращении к корню
+    ctx.body = 'Сервер работает!'
   })
   app.use(cors({ origin: '*' }))
   app.use(bodyParser())
